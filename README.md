@@ -3,7 +3,7 @@ following official build instructions from https://wiki.openssl.org/index.php/An
 
 
 ```
-wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz
+wget https://www.openssl.org/source/openssl-1.0.2p.tar.gz
 
 wget https://wiki.openssl.org/images/7/70/Setenv-android.sh
 
@@ -23,14 +23,15 @@ export ANDROID_NDK_ROOT=/data/android/android-ndk-r15c
 
 . ./setenv-android.sh
 
-tar -xvzf openssl-1.1.0f.tar.gz 
+tar -xvzf openssl-1.0.2p.tar.gz 
 
-cd openssl-1.1.0f
+cd openssl-1.0.2p
 
 ./config shared no-ssl2 no-ssl3 no-comp no-hw no-engine \
 --openssldir=/data/cpp_libs/android_libs/openssl_$ANDROID_API \
 --prefix=/data/cpp_libs/android_libs/openssl_$ANDROID_API
 
+make depend
 make all
 
 find . -name libcrypto.a
@@ -39,10 +40,10 @@ readelf -h ./libcrypto.a | grep -i 'class\|machine' | head -2
 
 # take care: this installs cross compiled headers and libs in /usr/local/include/openssl /usr/local/lib/ etc
 
-sudo -E make install CC=$ANDROID_TOOLCHAIN/arm-linux-androideabi-gcc RANLIB=$ANDROID_TOOLCHAIN/arm-linux-androideabi-ranlib
+make install CC=$ANDROID_TOOLCHAIN/arm-linux-androideabi-gcc RANLIB=$ANDROID_TOOLCHAIN/arm-linux-androideabi-ranlib
 ```
 
-the interesting part is in directory openssl-1.1.0f:
+the interesting part is in directory openssl-1.0.2p:
 
 ```
 -rw-r--r--  1 marco marco 3246360 Sep 11 12:28 libcrypto.a
