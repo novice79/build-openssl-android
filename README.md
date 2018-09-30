@@ -13,7 +13,7 @@ dos2unix setenv-android.sh
 
 chmod a+x setenv-android.sh
 
-export ANDROID_NDK_ROOT=/opt/android/android-ndk-r15b
+export ANDROID_NDK_ROOT=/data/android/android-ndk-r15c
 
 # now edit setenv-android.sh and set:
 
@@ -27,9 +27,9 @@ tar -xvzf openssl-1.1.0f.tar.gz
 
 cd openssl-1.1.0f
 
-./config shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=/usr/local/ssl/android-16/
-
-make dep
+./config shared no-ssl2 no-ssl3 no-comp no-hw no-engine \
+--openssldir=/data/cpp_libs/android_libs/openssl_$ANDROID_API \
+--prefix=/data/cpp_libs/android_libs/openssl_$ANDROID_API
 
 make all
 
